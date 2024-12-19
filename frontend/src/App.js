@@ -74,7 +74,7 @@ function App() {
     {isAuthenticated && <UserOptions user={user} />}
     <Routes>
 
-    {stripeApiKey && <Route exact path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)} ><ProtectedRoute Component={Payment} /></Elements>} />}
+    {/* {stripeApiKey && <Route exact path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)} ><ProtectedRoute Component={Payment} /></Elements>} />} */}
 
     </Routes>
     <Routes>
@@ -98,6 +98,12 @@ function App() {
       <Route exact path="/shipping" element={<><ProtectedRoute Component={Shipping} /><Footer/></>} />
       <Route exact path="/order/confirm" element={<><ProtectedRoute Component={ConfirmOrder} /><Footer/></>} />
       
+      {stripeApiKey ? (
+        <Route exact path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)} ><ProtectedRoute Component={Payment} /></Elements>} />
+      ) : (
+        <Route exact path="/process/payment" element={<div>Loading...</div>} />
+      )}
+
       <Route exact path="/success" element={<><ProtectedRoute Component={OrderSuccess} /><Footer/></>} />
       <Route exact path="/orders" element={<ProtectedRoute Component={MyOrders} />} />
       <Route exact path="/order/:id" element={<><ProtectedRoute Component={OrderDetails} /><Footer/></>} />
